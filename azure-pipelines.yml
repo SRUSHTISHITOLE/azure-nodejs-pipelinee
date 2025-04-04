@@ -1,0 +1,22 @@
+trigger:
+  - main  # or 'master' or any branch you want to monitor
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '18.x'
+    displayName: 'Install Node.js'
+
+  - script: |
+      npm install
+      npm install express
+      npm ci
+      npm run build
+    displayName: 'Install dependencies and build'
+
+  - script: |
+      npm test
+    displayName: 'Run tests'
